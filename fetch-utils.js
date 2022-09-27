@@ -42,6 +42,20 @@ export async function getProfile(id) {
 
 export async function getProfiles() {
     // > Part D: get all profiles (limit 100)
+    return await client.from('profiles').select();
+}
+
+export async function uploadImage(bucketName, imageName, imageFile) {
+    const bucket = client.storage.from(bucketName);
+
+    const response = await bucket.upload(imageName, imageFile, {
+        cacheControl: '3600',
+        upsert: true,
+    });
+
+    if (response.error) {
+        return null;
+    }
 }
 
 // TODO:
